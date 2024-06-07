@@ -85,7 +85,7 @@ def main():
     total_amount = sum(map(lambda x: x[3], valid_transactions))
 
     write_transactions_to_csv(valid_transactions, CSV_OUTPUT_FILE)
-    print(f"Total amount after only looking at positives: {total_amount}")
+    print(f"Total amount after only considering relevant transactions: {total_amount}")
 
 if __name__ == "__main__":
     main()
