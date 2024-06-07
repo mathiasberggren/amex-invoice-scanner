@@ -1,5 +1,5 @@
-# PDF's used for writing script
-test/
+# Input PDF's and output CSV's stored here
+data/
 
 # Template ignored files based on python 
 
