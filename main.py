@@ -22,9 +22,8 @@ pattern = re.compile(r"""
     (-?\d{1,3}(?:[.,]\d{3})*(?:,\d{2}|\.\d{2})) # Amount (e.g., 1.234,56 or 1234.56, with optional negative sign)
 """, re.VERBOSE)
 # Function to process each page and extract transactions
-def process_page(page, file):
+def process_page(page):
     text = page.extract_text()
-    file.write(text + "\n\n")  # Write the text to the file with some spacing
     matches = pattern.findall(text)
     return [(match[0], match[1], match[2].replace('\n', ' ').strip(), match[3]) for match in matches]
 
@@ -32,10 +31,10 @@ def remove_previous_payments(transaction):
     return "Betalning Mottagen, Tack" not in transaction[2]
 
 # Open the PDF file
-with pdfplumber.open('./test/2024-05-02.pdf') as pdf, open('extracted_text.txt', 'w', encoding='utf-8') as file:
+with pdfplumber.open('./test/2024-05-02.pdf') as pdf:
     transactions = []
     for page in pdf.pages:
-        transactions.extend(process_page(page, file))
+        transactions.extend(process_page(page))
 
 # Sort transactions by the transaction date
 transactions.sort(key=lambda x: parse_date(x[0]))
